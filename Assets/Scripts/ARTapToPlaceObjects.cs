@@ -8,17 +8,19 @@ using UnityEngine.XR.ARSubsystems;
 
 public class ARTapToPlaceObjects : MonoBehaviour
 {
-    public GameObject gameObjectToInstantiate;
+    public GameObject []gameObjectToInstantiate;
 
     private GameObject spawnObject;
     private ARRaycastManager _arRaycastManager;
     private Vector2 touchPosition;
+    private int spawnIndex;
 
     static List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
     private void Awake()
     {
         _arRaycastManager = GetComponent<ARRaycastManager>();
+
     }
 
     bool TryGetTouchPosition(out Vector2 touchPosition)
@@ -43,7 +45,8 @@ public class ARTapToPlaceObjects : MonoBehaviour
 
             if(spawnObject == null)
             {
-                spawnObject = Instantiate(gameObjectToInstantiate, hitPose.position, hitPose.rotation);
+                spawnIndex = ShapeSelector.shapeIndex;
+                spawnObject = Instantiate(gameObjectToInstantiate[spawnIndex], hitPose.position, hitPose.rotation);
             }
             else
             {

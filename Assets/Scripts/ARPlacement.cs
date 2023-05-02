@@ -6,12 +6,13 @@ using UnityEngine.XR.ARSubsystems;
 
 public class ARPlacement : MonoBehaviour
 {
-    public GameObject arObjectToSpawn;
+    public GameObject []arObjectToSpawn;
     public GameObject placementIndicator;
     private GameObject spawnedObject;
     private Pose PlacementPose;
     private ARRaycastManager aRRaycastManager;
     private bool PlacementPoseIsValid = false;
+    [SerializeField]private int spawnIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +58,7 @@ public class ARPlacement : MonoBehaviour
     }
     void ARPlaceObject()
     {
-        spawnedObject = Instantiate(arObjectToSpawn, PlacementPose.position, PlacementPose.rotation);
+        spawnIndex = ShapeSelector.shapeIndex;
+        spawnedObject = Instantiate(arObjectToSpawn[spawnIndex], PlacementPose.position, PlacementPose.rotation);
     }
 }

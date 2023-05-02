@@ -15,9 +15,11 @@ public class ScaleAndRotateSliders : MonoBehaviour
     public float rotateMinValue;
     public float rotateMaxValue;
 
+    Vector3 initialScale;
 
     void Start()
     {
+        initialScale = transform.localScale;
         scaleSlider = GameObject.Find("ScaleSlider").GetComponent<Slider>();
         scaleSlider.minValue = scaleMinValue;
         scaleSlider.maxValue = scaleMaxValue;
@@ -31,7 +33,7 @@ public class ScaleAndRotateSliders : MonoBehaviour
 
     void ScaleSliderUpdate(float value)
     {
-        transform.localScale = new Vector3(value, value, value);
+        transform.localScale = new Vector3(initialScale.x + value, initialScale.y + value, initialScale.z + value);
     }
     void RotateSliderUpdate(float value)
     {
