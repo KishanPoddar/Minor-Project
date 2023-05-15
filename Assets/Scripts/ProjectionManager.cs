@@ -16,7 +16,16 @@ public class ProjectionManager : MonoBehaviour
 
     public void OpenScenes(int index)
     {
-        SceneManager.LoadScene(index);
+        if(index == 2)
+        {
+            GameManager.isRestarted = false;
+            SceneManager.LoadScene(index);
+            Time.timeScale = 1;
+        }
+        else
+        {
+            SceneManager.LoadScene(index);
+        }
     }
 
     public void ChangePanel(int index)

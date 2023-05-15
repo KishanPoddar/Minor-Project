@@ -13,12 +13,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject scoreTxtObj;
     [SerializeField] private GameObject playEnvironment;
     [SerializeField] private GameObject buttonPanel;
+    [SerializeField] private GameObject soundSource;
 
 
     private string[] Shapes = {"Cube", "Sphere", "Cuboid", "Cylinder"};
     public static string selectedShape;
     private Text shapeSelectionTxt;
-    private static bool isRestarted = false;
+    public static bool isRestarted = false;
+    private static bool isPaused = true;
 
     void Start()
     {
@@ -30,7 +32,9 @@ public class GameManager : MonoBehaviour
         else
         {
             CloseMenus();
+            buttonPanel.SetActive(true);
             playEnvironment.SetActive(true);
+            soundSource.GetComponent<AudioSource>().Play();
         }
             if (SceneManager.GetActiveScene().buildIndex == 3)
             {
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour
     public void OpenLevels (int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
+        MoveShape.score = 0;
     }
 
     public void CloseMenus() 
@@ -94,13 +99,32 @@ public class GameManager : MonoBehaviour
         CloseMenus();
         playEnvironment.SetActive(true);
         buttonPanel.SetActive(true);
+        soundSource.GetComponent<AudioSource>().Play();
     }
     public void RetryForLevel1()
     {
+        Time.timeScale = 1;
         isRestarted = true;
         OpenLevels(2);
-        Time.timeScale = 1;
-        CloseMenus();
         playEnvironment.SetActive(true);
+        soundSource.GetComponent<AudioSource>().Play();
+    }
+    public void PauseResume()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 0;
+            isPaused = false;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            isPaused = true;
+        }
+    }
+
+    private void OnDisable()
+    {
+        PauseResume();
     }
 }

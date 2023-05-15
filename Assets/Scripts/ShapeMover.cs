@@ -18,6 +18,7 @@ public class ShapeMover : MonoBehaviour
     public static int poleIndex = 0;
     static float direction;
 
+    [SerializeField] private AudioClip music;
     [SerializeField] private GameObject[] shapes;
     [SerializeField] private float moveSpeed = 5;
     [SerializeField] private GameObject SelectionPoles;
@@ -29,6 +30,7 @@ public class ShapeMover : MonoBehaviour
 
     void Start()
     {
+        //soundPlayer = GameObject.FindGameObjectWithTag("Sound");
         poleList = new List<GameObject>();
         gameManager = FindObjectOfType<GameManager>();
         gameObject.name = ProtoNames[0];
@@ -54,6 +56,7 @@ public class ShapeMover : MonoBehaviour
         if (other.CompareTag("Pole"))
         {
             other.GetComponent<Collider>().enabled = false;
+            other.gameObject.SetActive(false);
             StartCoroutine(ChangeShape());
             
 
